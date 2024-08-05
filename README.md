@@ -1,7 +1,7 @@
 # Single cell multiome profiling of pancreatic islets reveals physiological changes in cell type-specific regulation associated with diabetes risk.
 This repository contains code and reference files used to perform all analyses in our manuscript which describes how both phenotype and genotype change pancreatic islet gene regulation. 
 
-<img src="https://github.com/Gaulton-Lab/non-diabetic-islet-multiomics/blob/main/images/Project_Diagram2.jpeg" width="1000" height="475" />
+<img src="https://github.com/Gaulton-Lab/non-diabetic-islet-multiomics/blob/main/images/Project_Diagram2.jpeg" width="1000" height="350" />
 
 ## Data availability
 - Check out [multiome.isletgenomics.org](http:multiome.isletgenomics.org) for interactive tools you can use to explore our multimodal single cell map and trait association findings (more tools to come later!)
