@@ -4,7 +4,7 @@ This repository contains code and reference files used to perform all analyses i
 <img src="https://github.com/Gaulton-Lab/non-diabetic-islet-multiomics/blob/main/images/Project_Diagram2.jpeg" width="1000" height="425" />
 
 ## Data availability
-- Check out [multiome.isletgenomics.org](multiome.isletgenomics.org) for interactive tools you can use to explore our multimodal single cell map and trait association findings (more tools to come later!)
+- Check out [multiome.isletgenomics.org](http:multiome.isletgenomics.org) for interactive tools you can use to explore our multimodal single cell map and trait association findings (more tools to come later!)
 - Raw data from the paired snRNA-seq and snATAC-seq assays can be found at [GSE273925](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE273925)
 - Processed data will be available on the [Common Metabolic Diseases Genome Atlas (CMDGA)](https://cmdga.org/publications/)
 
