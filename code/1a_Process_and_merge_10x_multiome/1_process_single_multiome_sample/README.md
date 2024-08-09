@@ -19,12 +19,12 @@ This directory contains scripts and notebooks used to process 10X multiome data 
     - Inputs: `sample_dir`, `output_dir`, `reticulate_path`, `marker_file`, `short_marker_file`, `soupx_marker_file`
     - Outputs: `SoupX_estimated_background.csv`, `SoupX_MarkerMaps.pngs`, `SoupX_ChangeMaps.png`, `final_filtered.rds`, `final_filtered_UMAPS.png`, `final_filtered_metrics.png`, `final_filtered_metrics_UMAP.png`, `final_filtered_marker_genes.png`, `final_filtered_marker_genes_UMAP.png`
 
-### Examples of Running the Bash Script
+### Example of Running the Bash Script
 
 ```bash
 sh multiome_sample_processing.sh \
 -s R221 \
--d /nfs/lab/projects/multiomic_islet/data/multiomics/cellranger/deep-shallow/R221/outs$
+-d /nfs/lab/projects/multiomic_islet/data/multiomics/cellranger/deep-shallow/R221/outs \
 -r /home/hmummey/.conda/envs/reticulate \
 -o /nfs/lab/hmummey/multiomic_islet/intermediates/220106_multiome_pipeline_v2_tests
 ```
