@@ -14,7 +14,7 @@
 	/path/to/bam.file \
 	/path/to/singlecell.csv \
 	non-diabetic-islet-multiomics/references/human_autosomes.txt \
-	non-diabetic-islet-multiomics/references/blacklist_repeats_segdups_rmsk_hg38.bed \
+	path/to/blacklist.bed \
 	/path/to/outputs/ \
 	/path/to/amulet_zip/
 ```

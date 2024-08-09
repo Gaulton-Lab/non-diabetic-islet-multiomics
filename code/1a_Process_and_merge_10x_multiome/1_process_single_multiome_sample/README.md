@@ -12,7 +12,7 @@ This directory contains scripts and notebooks used to process 10X multiome data 
     - Inputs: `sample_dir`, `output_dir`, `rna_min_features`, `atac_min_features`, `reticulate_path`, `marker_file`
     - Outputs: `intermediate_filtered.rds`, `filtered_barcodes.txt`, `UMIs_per_BCs.png`, `intermediate_filtered_UMAPs.png`, `intermediate_filtered_metrics.png`, `intermediate_filtered_marker_genes.png`
 - [Python script](https://github.com/Gaulton-Lab/non-diabetic-islet-multiomics/tree/main/code/1a_Process_and_merge_10x_multiome/1_process_single_multiome_sample/2ATAC_processing.py): `2ATAC_processing.py`
-    - Inputs: —bam (`atac_possorted_bam.bam`), —fragments (`atac_fragments.tsv.gz`),  —keep (`filtered_barcodes.txt`), -outdir
+    - Inputs: —bam (`atac_possorted_bam.bam`), —fragments (`atac_fragments.tsv.gz`),  —keep (`filtered_barcodes.txt`), --blacklist (`/path/to/blacklist.bed`), -outdir
     - Optional inputs (all have default settings): —threads, —memory, —mapquality, —shift, —extsize, —skip-convert, —skip-rmdup, —skip_tagalign, —skip-matrix
     - Outputs: `atac_possorted_bam.compiled.filt.bam`, `atac_possorted_bam.compiled.filt.bam`, `atac_possorted_bam.filt.md.bam`, `atac_possorted_bam.filt.rmdup.bam`, `atac_keep_reads.tagAlign.gz`, `atac_fragments.filtered_barcode.tsv.gz`, `atac_possorted_reads.filtered_barcode.bed.gz`, `atac.long_fmt.filtered_barcode.mtx`
 - [R script 2](https://github.com/Gaulton-Lab/non-diabetic-islet-multiomics/tree/main/code/1a_Process_and_merge_10x_multiome/1_process_single_multiome_sample/3sample_postfilter_SoupX_ATACwindows.R): `3sample_postfilter_SoupX_ATACwindows.R`
