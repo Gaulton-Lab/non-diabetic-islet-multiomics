@@ -18,4 +18,4 @@
 	/path/to/outputs/ \
 	/path/to/amulet_zip/
 ```
-    2. Most important file: `MultipletBarcodes_01.txt`
+3. Most important output file: `MultipletBarcodes_01.txt` (list of doublet/multiplet barcodes)
