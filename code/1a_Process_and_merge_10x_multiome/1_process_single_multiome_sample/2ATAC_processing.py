@@ -11,7 +11,6 @@ import os
 import gzip
 import argparse
 import subprocess
-# import logging
 import pysam
 import numpy as np
 import pandas as pd
@@ -48,13 +47,10 @@ def remove_duplicate_reads(args):
     rmdup_bam = args.outdir + '/atac_possorted_bam.filt.rmdup.bam'
 
     #Set up methods to process the bam files to remove duplicates
-    #tmp_fp = '/nfs/lab/hmummey/multiomic_islet/intermediates/220106_multiome_pipeline_v2_tests/tmp_test/R221_test'
     filt_cmd = ['samtools', 'view', '-bu', '-q', str(args.mapquality), '-F', '256', '-F', '512', '-F', '2048', filt_bam] #filter bams
     sortname_cmd = ['samtools', 'sort', '-n', '-m' , str(args.memory)+'G', '-@', str(args.threads), '-'] #sort bams by read names
-    #sortname_cmd = ['samtools', 'sort', '-n', '-m' , str(args.memory)+'G', 'T', tmp_fp, '-@', str(args.threads), '-'] #sort bams by read names
     fixmate_cmd = ['samtools', 'fixmate', '-r', '-', '-'] #fill in mate coordinates, remove secondary and unmapped reads
     sortpos_cmd = ['samtools', 'sort', '-m', str(args.memory)+'G', '-@', str(args.threads), '-o', markdup_bam] #sort bams by leftmost coordinates
-    #sortpos_cmd = ['samtools', 'sort', '-m', str(args.memory)+'G', 'T', tmp_fp, '-@', str(args.threads), '-o', markdup_bam] #sort bams by leftmost coordinates
     index_cmd = ['samtools', 'index', markdup_bam] #index ^ file
     rmdup_cmd = ['samtools', 'view', '-@', str(args.threads), '-b', '-f', '3', '-F', '1024', markdup_bam] #filter bams for those mapped with with pair, no PCR duplicates
     rmdup_cmd.extend(['chr{}'.format(c) for c in list(map(str, range(1,23))) + ['X','Y']]) #add chr prefix
@@ -75,8 +71,7 @@ def remove_duplicate_reads(args):
 
 
 def create_tagAlign(args):
-    ### Filter the bam file for keep barcodes and output in tagAlign format
-    ### Currently this is a bit repetitive with the dedup steps...
+    ### Filter the bam file for keep barcodes and output in tagAlign format (necessary for peak calling)
     print('Creating the tagAlign file:',datetime.now())
 
     #Read in the keep barcodes and store them as a set
@@ -168,8 +163,6 @@ def create_ATAC_windows_lfm(args):
     with open(args.outdir + '/atac.long_fmt.filtered_barcode.mtx', 'w') as f_out:
         #print('peak', 'barcode', 'value', sep='\t', file=f_out)
         subprocess.call(['awk', 'BEGIN{{OFS=\"\\t\"}} {{print $2,$3,$1}}'], stdin=uniq.stdout, stdout=f_out)
-    #This was erroring for some reason, so moved the gzip step to the overall bash script
-    #subprocess.call(['gzip', args.outdir+'/atac.long_fmt.filtered_barcode.mtx'])
     return
 
 
@@ -212,6 +205,5 @@ def process_args():
 
 
 if __name__ == '__main__':
-    # logging.basicConfig(format='[%(filename)s] %(asctime)s %(levelname)s: %(message)s', datefmt='%I:%M:%S', level=logging.DEBUG)
     args = process_args()
     main(args)
