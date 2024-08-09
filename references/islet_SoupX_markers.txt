@@ -1,0 +1,5 @@
+Gene	Group
+INS	Beta
+GCG	Alpha
+SST	Delta
+PPY	Gamma
