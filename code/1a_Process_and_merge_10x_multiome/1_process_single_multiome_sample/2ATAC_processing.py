@@ -154,8 +154,8 @@ def create_ATAC_windows_lfm(args):
 
     # Use bed tools to generate a windows list and intersect it with the sorted and filtered bed file, then print out as a long format matrix
     print("Creating the windows LFM:",datetime.now())
-    mkw = subprocess.Popen(['bedtools', 'makewindows', '-g', args.blacklist, '-w', '5000'], stdout=subprocess.PIPE) #make 5kb windows from the genome
-    bl = subprocess.Popen(['bedtools', 'intersect', '-a' , '-', '-b', '/nfs/lab/ref/hg38-blacklist.v3.bed', '-v'], stdin=mkw.stdout, stdout=subprocess.PIPE) #remove windows that are in the blacklist
+    mkw = subprocess.Popen(['bedtools', 'makewindows', '-g', args.chromsizes, '-w', '5000'], stdout=subprocess.PIPE) #make 5kb windows from the genome
+    bl = subprocess.Popen(['bedtools', 'intersect', '-a' , '-', '-b', args.blacklist, '-v'], stdin=mkw.stdout, stdout=subprocess.PIPE) #remove windows that are in the blacklist
     pair = subprocess.Popen(['bedtools', 'intersect', '-a', reads_file, '-b', '-', '-wa', '-wb'], stdin=bl.stdout, stdout=subprocess.PIPE) #intersect the reads file with the windows, keep those that overlap a window
     awk = subprocess.Popen(['awk', 'BEGIN{{FS=OFS=\"\\t\"}} {{print $5\"-\"$6\"-\"$7,$4}}'], stdin=pair.stdout, stdout=subprocess.PIPE) #reformat the window name
     sort = subprocess.Popen(['sort', '-S', '48G'], stdin=awk.stdout, stdout=subprocess.PIPE) #sort the reads by window they overlap
@@ -195,7 +195,8 @@ def process_args():
     tagalign_group = parser.add_argument_group('tagAlign generation arguments')
     tagalign_group.add_argument('-s', '--shift', required=False, type=int, default=-100, help='Read shift length')
     tagalign_group.add_argument('-e', '--extsize', required=False, type=int, default=200, help='Read extension size')
-    tagalign_group.add_argument('-l', '--blacklist', required=True, type=str, default='/nfs/lab/elisha/nPOD_output/scripts/references/hg38.chrom.sizes', help='Black list file')
+    tagalign_group.add_argument('-c', '--chromsizes', required=True, type=str, default='non-diabetic-islet-multiome/references/hg38.chrom.sizes', help='Chromosome sizes file')
+    tagalign_group.add_argument('-l', '--blacklist', required=True, type=str, default='/nfs/lab/ref/hg38-blacklist.v3.bed', help='Black list file')
 
     skip_group = parser.add_argument_group('Skip steps')
     skip_group.add_argument('--skip-convert', required=False, action='store_true', default=False, help='Skip bam conversion step')
