@@ -2,11 +2,6 @@
 # and then perform SoupX on the RNA counts. Afterwards, we will add in the ATAC WINDOWS counts
 # (from sample_make_ATAC_lfm_fromBCs.py), regenerate bulk metrics, and perform standard clustering analyses.
 
-# This is v2 of the pipeline and the following changes have been implemented:
-# - The SoupX marker genes used for group assignment are read in from a file (need to be 4 groups, each with 1 gene)
-# - The raw RNA data is saved as an additional assay in adata2 (RNA_raw), RNA refers to post SoupX RNA
-# - The marker genes used in the dotplot are read in from a file
-
 
 ### Set up steps
 #Read in necessary inputs

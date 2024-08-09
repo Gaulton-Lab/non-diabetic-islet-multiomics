@@ -2,10 +2,6 @@
 # to filter BCs for cells. We then cluster and produce the normal multiome plots.
 # Finally we output an rds file and list of barcodes for use in future steps.
 
-# This is v2 of the pipeline and the following changes have been implemented:
-# - The marker genes used in the dotplot are read in from a file
-
-
 ### Set up steps
 #Read in necessary inputs
 args = commandArgs(trailingOnly=TRUE)
