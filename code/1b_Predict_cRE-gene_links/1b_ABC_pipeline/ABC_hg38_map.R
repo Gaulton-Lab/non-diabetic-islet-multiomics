@@ -1,6 +1,5 @@
 # This is a really basic script that just does some dataframe manipulation to make sure we combine
-# the correct rows of the mapped CRE and gene TSS coords files. There is probably a way to do this
-# with bash but this was faster for me to implement.
+# the correct rows of the mapped CRE and gene TSS coords files.
 
 # Inputs:
 # 1) ABC Prediction directory for one celltype run (made by our pipeline and the ABC scripts)
