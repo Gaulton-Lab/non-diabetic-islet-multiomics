@@ -23,7 +23,7 @@ To run ABC, we will need pseudobulk ATAC-seq bam files by cell type. To make the
 
 **NOTE:** this step can (and should) be run simultaneously with Step 2, since they are making different input data.
 
-Prepare bams script: `ABC_prepare_bams_parallel.sh`
+Prepare bams script: `ABC_prepare_bams.sh`
 
 - Inputs: -s `samples.txt`, -b `/path/to/deduplicated/sample/bams`, -c `celltypes.txt`, -o `/path/to/ABC/run/directory`, -p `/path/to/peak/call/outputs`, -n (number of cores for parallelization)
     - `samples.txt` is a \n delimited .txt file with the names of all samples to use data from
@@ -53,7 +53,7 @@ Again, because we are running ABC with an hg19 HiC reference, we need to recall 
 
 **NOTE:** this step can (and should) be run simultaneously with Step 1, since they are making different input data.
 
-Prepare peaks script: `ABC_prepare_peaks_parallel.sh`
+Prepare peaks script: `ABC_prepare_peaks.sh`
 
 - Inputs: -t `/path/to/tagAligns/with/fileprefix`, -c `celltypes.txt`, -o `/path/to/ABC/run/directory`, -e `/path/to/conda/env/with/MACS2`, -n (number of cores for parallelization)
     - `/path/to/tagAligns/with/fileprefix` includes everything in the tagAlign file name until `${celltype}.tagAlign` (not gzipped files!)

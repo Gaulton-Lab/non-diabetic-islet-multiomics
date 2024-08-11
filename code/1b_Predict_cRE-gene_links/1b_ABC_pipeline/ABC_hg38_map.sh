@@ -22,7 +22,7 @@ awk 'BEGIN{FS=OFS="\t"}{print $0,NR-1}' EnhancerPredictions.txt  > EnhancerPredi
 
 #Remove the header and then perform liftover to hg38 for the CRE coordinations
 tail -n+2 EnhancerPredictions.rownames.txt > EnhancerPredictions.rmHeader.txt
-chain="/nfs/lab/ABC/references/hg19ToHg38.over.chain"
+chain="non-diaetic-islet-multiomics/references/hg19ToHg38.over.chain"
 CrossMap.py region $chain EnhancerPredictions.rmHeader.txt EnhancerPredictions.crecoords.hg38.txt
 
 #Make bed file of gene TSS coords from EnhancerPredictions and map to hg38
@@ -34,7 +34,7 @@ CrossMap.py bed $chain EnhancerPredictions.genecoords.hg19.txt EnhancerPredictio
 
 
 ##### In R combine pieces so you can skip rows that didn't map #####
-map_Rscript='/nfs/lab/ABC/code/ABC_hg38_map.R'
+map_Rscript='non-diabetic-islet-multiomics/code/1b_Predict_cRE-gene_links/1b_ABC_pipeline/ABC_hg38_map.R'
 Rscript $map_Rscript $outdir
 
 

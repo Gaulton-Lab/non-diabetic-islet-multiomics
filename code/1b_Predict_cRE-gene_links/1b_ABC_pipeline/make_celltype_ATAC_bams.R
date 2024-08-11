@@ -1,6 +1,6 @@
 # This script is an adaptation of some code Paola sent me to split sample bam files by celltypes. It requires that you have files
 # with the barcodes for each celltype (an output of our peak calling pipeline) and is a bit dependent on sample naming conventions.
-# I think it's generalizable though, just requires that the sample name and BC are separated by a "_" in the barcodes.txt files.
+# It just requires that the sample name and BC are separated by a "_" in the barcodes.txt files.
 # This script also assumes you have edit access to the bam files you're going to split, so make sure you do!
 
 # Inputs:

@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 ### In this script we will call peaks in hg19 for use in running ABC. This assumes we have the celltype specific tagAlign
 ### files from calling peaks on the same group of cell types that we plan to run ABC on!
-### This assumes you have a conda env with macs2 installed. You can copy this one if necessary:
-### conda create --name call_peaks --clone /home/kakorgao/.conda/envs/kat_py_37/
+### This assumes you have a conda env with macs2 installed.
 
 ### Read in dynamic inputs from flags using getopts
 # Necessary inputs: directory where the hg38 tagaligns are, celltypes list, ABC output dir, exact path to conda env with macs2, number of cores to parallelize
@@ -38,7 +37,7 @@ if [ ! -f "$log_file" ]; then touch $log_file; fi
 echo "Lifting over tagAligns to hg19 "`date` >> $log_file
 
 # Perform liftover with CrossMap, parallelized with parallel to do all cell types at once
-chain="/nfs/lab/ABC/references/hg38ToHg19.over.chain"
+chain="non-diabetic-islet-multiomics/references/hg38ToHg19.over.chain"
 parallel -j $num_cores "CrossMap.py bed $chain ${tagalign_inprefix}{}.tagAlign ${tagalign_outdir}/{}.tagAlign" ::: ${celltypes[@]}
 echo "" >> $log_file
 

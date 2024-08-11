@@ -39,22 +39,21 @@ N=$num_cores
 
 
 ### Make cell type and sample specific bams
-### This is kinda complicated, so I'm just gonna do it in an R script (which will be called here)
-make_celltype_bams_Rscript="/nfs/lab/ABC/code/make_celltype_ATAC_bams.R"
-# Rscript $make_celltype_bams_Rscript $bam_indir $bam_outdir $peak_dir $celltypes_fp $samples_fp $num_cores >> $log_file
-# echo "" >> $log_file
+make_celltype_bams_Rscript="non-diabetic-islet-multiomics/code/1b_Predict_cRE-gene_links/1b_ABC_pipeline/make_celltype_ATAC_bams.R"
+Rscript $make_celltype_bams_Rscript $bam_indir $bam_outdir $peak_dir $celltypes_fp $samples_fp $num_cores >> $log_file
+echo "" >> $log_file
 
 
 ### Liftover the cell type and sample specific bams to hg19
 echo "Lifting over bams to hg19 "`date` >> $log_file
 
 # Necessary inputs
-chain="/nfs/lab/ABC/references/hg38ToHg19.over.chain"
+chain="non-diabetic-islet-multiomics/references/hg38ToHg19.over.chain"
 liftover_outdir="${ABC_dir}/inputs/ATAC_bams/hg19_liftover"
 if [ ! -d "$liftover_outdir" ]; then mkdir $liftover_outdir; fi
 
 # Loop through every bam file (by sample and celltype) and liftover!
-# Uses the parallelize program to run all celltypes for a single sample at once (best I could do)
+# Uses the parallelize program to run all celltypes for a single sample at once
 for s in "${samples[@]}"
 do
     echo "Working on sample ${s} "`date` >> $log_file
@@ -69,7 +68,6 @@ echo "" >> $log_file
 echo "Merging hg19 bams by celltype "`date` >> $log_file
 
 # Merge all celltype bams, sort and index
-# Uses special notation to parallelize this based on num_cores -- pretty sure this just runs all cts at once LOL
 for (( i=0; i<${num_of_cts}; i++ )); do
     ((j=j%N)); ((j++==0)) && wait
     ct=${celltypes[$i]}
@@ -78,13 +76,12 @@ for (( i=0; i<${num_of_cts}; i++ )); do
     all_ct_files="${liftover_outdir}/*/*_${ct}.sorted.bam"
     samtools merge -f -o $out_fp1 $all_ct_files #overwrites any existing file
     out_fp2="${liftover_outdir}/${ct}.sorted.bam"
-    sort -k1,1 -k2,2n $out_fp1 > $out_fp2 ######################################## Pretty sure this sorting does not work
+    sort -k1,1 -k2,2n $out_fp1 > $out_fp2 
     samtools index $out_fp1 &
-    ###################################################### Why don't we index the sorted one??? (I guess ^ doesn't matter then)
 done
 
 
-### Remove the hg19_liftover files (after ensuring the merged files are good)
+### Remove the hg19_liftover files
 cd $liftover_outdir
 for s in "${samples[@]}"
 do
