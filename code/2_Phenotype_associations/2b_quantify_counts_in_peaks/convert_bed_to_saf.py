@@ -1,3 +1,5 @@
+### Script written by Mei-lin Okino to convert a bed file to a saf file
+
 import argparse
 
 def bed_to_saf(bed, out):

@@ -5,21 +5,22 @@
 ### - celltypes_fp: file with list of cell types to create featureCount matrices for, each on new line
 ### - num_cores: number of samples to run in parallel
 ### - barcode_in_dir: directory with filtered barcode lists by sample (assumes naming convention: sample.filtered_barcodes_wCTs_ofInterest.txt)
-### - peaks_saf_fp: file to saf file with peaks to use to make the matrix (made with Mei's script: /home/mokino/scripts/convert_bed_to_saf.py)
+### - peaks_saf_fp: file to saf file with peaks to use to make the matrix (made with Mei's script)
 ### - out_dir: overall directory to write outputs to (script makes subdirs for filtered bams and feature counts outputs)
+### - env_with_sinto: path to conda env with sinto installed
 
-### NOTE: because of weird file naming conventions I had to hardcode in the bam file paths for the HPAP samples... for other uses, modify that one line manually before running this
-### NOTE 2: this uses some of Mei's scripts which are only on Ophelia in her home dir, so probably can only be run on Ophelia
+### NOTE: because of file naming conventions I had to hardcode in the bam file paths for the HPAP samples... for other uses, modify that one line manually before running this
 
-while getopts s:c:n:b:p:o: flag
+while getopts s:c:n:b:p:o:e: flag
 do
     case "${flag}" in
       s) samples_fp=${OPTARG};;
-			c) celltypes_fp=${OPTARG};;
+	  c) celltypes_fp=${OPTARG};;
       n) num_cores=${OPTARG};;
       b) barcode_in_dir=${OPTARG};;
       p) peaks_saf_fp=${OPTARG};;
       o) out_dir=${OPTARG};;
+	  e) env_with_sinto=${OPTARG};;
     esac
 done
 
@@ -43,7 +44,7 @@ for sample in ${samples[@]}; do
 							barcodes_fp=${barcode_in_dir}/${sample}.filtered_barcodes_wCTs_ofInterest.txt
 							out_dir=${out_dir}/filt_bams/${sample}
 							if [ ! -d "$out_dir" ]; then mkdir -p $out_dir; fi
-							/home/mokino/miniconda3/envs/sinto/bin/sinto filterbarcodes -b $bam_fp -c $barcodes_fp --outdir $out_dir
+							${env_with_sinto}/bin/sinto filterbarcodes -b $bam_fp -c $barcodes_fp --outdir $out_dir
 							echo "Done splitting bam file for sample" $sample ":" `date` >> $log_fp
         ) &
 done
@@ -65,7 +66,7 @@ for celltype in ${celltypes[@]}; do
 				sed -i '/\*/d' $split_bams_fp
 done
 
-# Run featureCounts by cell type (not parallelizing for now bc this is quite fast already)
+# Run featureCounts by cell type
 fc_dir=${out_dir}/feature_counts
 if [ ! -d "$fc_dir" ]; then mkdir -p $fc_dir; fi
 
@@ -73,9 +74,8 @@ for celltype in ${celltypes[@]}; do
 				echo "Running featureCounts on" $celltype "cells:" `date` >> $log_fp
 				split_bams_fp=${out_dir}/filt_bams/${celltype}.bam_fps.txt
 				out_mtx_fp=${fc_dir}/${celltype}_featureCounts_mtx.txt
-				bash /home/mokino/scripts/call_featureCounts.sh $split_bams_fp $peaks_saf_fp $out_mtx_fp
+				bash non-diabetic-islet-multiomics/code/2_Phenotype_associations/2b_quantify_counts_in_peaks/call_featureCounts.sh $split_bams_fp $peaks_saf_fp $out_mtx_fp
 				echo "Done running featureCounts on" $celltype "cells:" `date` >> $log_fp
 done
 
 echo "All done!" `date` >> $log_fp
-
