@@ -1,4 +1,4 @@
-## Code
+## Code organization
 The code contained in this repository is organized as follows:
 1. Create a multimodal (snRNA+snATAC) map of gene regulation in islets
     1. Process and clean data from 10x Multiome assays from 28 non-diabetic donors
