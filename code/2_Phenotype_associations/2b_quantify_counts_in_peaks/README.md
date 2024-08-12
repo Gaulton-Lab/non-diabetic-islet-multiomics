@@ -34,6 +34,8 @@ Script to split sample bams by cell type with sinto and then use featureCounts o
     - `filt_bams`: directory with per donor subdirectories of per-cell type split bam files (from sinto)
     - `feature_counts`: directory with per cell type featureCounts outputs (matrix and summary)
 
+**NOTE: because of file naming conventions I had to hardcode in the bam file paths in this script. Modify this line before running the script: `bam_fp=/nfs/lab/hpap_data/atac/${sample}/Upenn_scATACseq/cellranger_RME/${sample}/outs/possorted_bam.bam`**
+
 Example code:
 ```
 out_dir=/nfs/lab/projects/multiomic_islet/outputs/multiome/trait_associations/240308_HPAP_ATAC_processing/240313_4missing_samples
