@@ -2,12 +2,12 @@
 
 In order to combine the Alberta and HPAP data together for phenotype associations, we need to have the snATAC-seq counts matrices for the exact set of peaks (rows in the matrix). The peaks are from the Alberta object, so here I'll quantify counts for the same set of peaks from the HPAP snATAC-seq data using two packages: `sinto` and `featureCounts`.
 
-### Step 1: Prepare necessary inputs
+## Step 1: Prepare necessary inputs
 1. Generate files with the list of barcodes for each sample for cell types of interest where the first column is barcode, second column is cell type with sample name appended to it (Found in notebook `2a_RNA+ATAC_associations_prep.ipynb`)
     1. Format: `${barcode_in_dir}/${sample}.filtered_barcodes_wCTs_ofInterest.txt`
 2. Bed file of all peaks you want to quantify counts in
 
-### Step 2: Make a .saf file out of the peaks bed file
+## Step 2: Make a .saf file out of the peaks bed file
 Script to convert a bed file to a saf file: `convert_bed_to_saf.py` (written by Mei-lin Okino)
 - Inputs: bed file to convert, file path to write saf file to
 - Outputs: writes saf file to given file path
@@ -19,7 +19,7 @@ out_saf=/nfs/lab/projects/multiomic_islet/outputs/multiome/trait_associations/HP
 python convert_bed_to_saf.py $peaks_fp $out_saf
 ```
 
-### Step 3: Run sinto and featureCounts to quantify counts in peaks
+## Step 3: Run sinto and featureCounts to quantify counts in peaks
 Script to split sample bams by cell type with sinto and then use featureCounts on these to quantify all counts within a set of peaks for a cell type (creates per-donor counts matrix).
 - Inputs: 
     - `-s samples_fp`: file with list of samples to run on, each on new line
